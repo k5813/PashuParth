@@ -1,0 +1,145 @@
+{
+  "healthy_cattle_baseline": {
+    "description": "Fully healthy Sahiwal-type cattle, all readings well inside No-Risk bands.",
+    "what_this_tests": "Sanity baseline — model should predict 'none' with high confidence.",
+    "reading": {
+      "species": "Cattle", "breed_category": "crossbred", "lactation_stage": "mid", "parity_bucket": "2-3",
+      "prior_mastitis_history": false, "prior_mastitis_episodes": 0, "vaccination_status": true,
+      "EC_mScm": 4.1, "pH": 6.60, "SCC_available": false, "SCC_x1e5_ml": null,
+      "udder_temp_C": 33.6, "milk_temp_C": 34.0,
+      "yield_deviation_pct": 2, "duration_deviation_pct": 4, "abnormal_flow_flag": false,
+      "body_temp_C": 38.7, "rumination_drop_pct": 2, "standing_lying_deviation_pct": 4,
+      "THI": 65, "ammonia_ppm": 10, "co_ppm": 1.0, "co2_ppm": 800
+    }
+  },
+  "healthy_buffalo_baseline": {
+    "description": "Fully healthy Murrah-type buffalo, all readings well inside No-Risk bands.",
+    "what_this_tests": "Sanity baseline for the other species — model should predict 'none' with high confidence.",
+    "reading": {
+      "species": "Buffalo", "breed_category": "indigenous", "lactation_stage": "early", "parity_bucket": "1",
+      "prior_mastitis_history": false, "prior_mastitis_episodes": 0, "vaccination_status": false,
+      "EC_mScm": 3.5, "pH": 6.45, "SCC_available": false, "SCC_x1e5_ml": null,
+      "udder_temp_C": 33.4, "milk_temp_C": 33.3,
+      "yield_deviation_pct": 1, "duration_deviation_pct": 3, "abnormal_flow_flag": false,
+      "body_temp_C": 38.1, "rumination_drop_pct": 1, "standing_lying_deviation_pct": 3,
+      "THI": 68, "ammonia_ppm": 9, "co_ppm": 0.9, "co2_ppm": 750
+    }
+  },
+  "clinical_mastitis_cattle_severe": {
+    "description": "Cattle deep in High-Risk on every single parameter (EC 6.2, pH 7.15, SCC 7.8, etc.), no heat confound.",
+    "what_this_tests": "Textbook severe/clinical case — model should predict 'clinical' with high confidence.",
+    "reading": {
+      "species": "Cattle", "breed_category": "indigenous", "lactation_stage": "late", "parity_bucket": "4+",
+      "prior_mastitis_history": true, "prior_mastitis_episodes": 2, "vaccination_status": false,
+      "EC_mScm": 6.2, "pH": 7.15, "SCC_available": true, "SCC_x1e5_ml": 7.8,
+      "udder_temp_C": 35.4, "milk_temp_C": 35.3,
+      "yield_deviation_pct": 32, "duration_deviation_pct": 48, "abnormal_flow_flag": true,
+      "body_temp_C": 40.8, "rumination_drop_pct": 34, "standing_lying_deviation_pct": 42,
+      "THI": 70, "ammonia_ppm": 15, "co_ppm": 2.0, "co2_ppm": 950
+    }
+  },
+  "clinical_mastitis_buffalo_severe": {
+    "description": "Buffalo deep in High-Risk on every parameter using buffalo-specific (lower) cutoffs, no heat confound.",
+    "what_this_tests": "Textbook severe/clinical case for the species with the least literature support — model should predict 'clinical' with high confidence.",
+    "reading": {
+      "species": "Buffalo", "breed_category": "crossbred", "lactation_stage": "late", "parity_bucket": "4+",
+      "prior_mastitis_history": true, "prior_mastitis_episodes": 3, "vaccination_status": false,
+      "EC_mScm": 5.9, "pH": 7.05, "SCC_available": true, "SCC_x1e5_ml": 8.5,
+      "udder_temp_C": 34.6, "milk_temp_C": 36.0,
+      "yield_deviation_pct": 30, "duration_deviation_pct": 50, "abnormal_flow_flag": true,
+      "body_temp_C": 40.2, "rumination_drop_pct": 33, "standing_lying_deviation_pct": 40,
+      "THI": 72, "ammonia_ppm": 14, "co_ppm": 1.8, "co2_ppm": 900
+    }
+  },
+  "heat_stress_false_positive_cattle": {
+    "description": "THI Emergency (88) driving up EC/udder/milk/body temperature, but pH, yield, rumination and standing/lying all stay clean — a heat wave, not mastitis.",
+    "what_this_tests": "The exact false-positive scenario Section 4 of the spec warns about. A good model/heuristic should NOT confidently call this 'clinical' despite several High-Risk individual readings.",
+    "reading": {
+      "species": "Cattle", "breed_category": "exotic", "lactation_stage": "mid", "parity_bucket": "2-3",
+      "prior_mastitis_history": false, "prior_mastitis_episodes": 0, "vaccination_status": true,
+      "EC_mScm": 5.0, "pH": 6.80, "SCC_available": false, "SCC_x1e5_ml": null,
+      "udder_temp_C": 34.9, "milk_temp_C": 34.9,
+      "yield_deviation_pct": 6, "duration_deviation_pct": 8, "abnormal_flow_flag": false,
+      "body_temp_C": 40.3, "rumination_drop_pct": 4, "standing_lying_deviation_pct": 6,
+      "THI": 88, "ammonia_ppm": 20, "co_ppm": 2.5, "co2_ppm": 1000
+    }
+  },
+  "exact_boundary_case_cattle": {
+    "description": "Every cattle parameter set to EXACTLY its own No/Low/Moderate/High cutoff boundary value.",
+    "what_this_tests": "Edge-of-band behavior — where bands actually flip, and whether the model's decision is stable right at a published cutoff.",
+    "reading": {
+      "species": "Cattle", "breed_category": "indigenous", "lactation_stage": "mid", "parity_bucket": "2-3",
+      "prior_mastitis_history": false, "prior_mastitis_episodes": 0, "vaccination_status": true,
+      "EC_mScm": 5.30, "pH": 6.95, "SCC_available": false, "SCC_x1e5_ml": null,
+      "udder_temp_C": 34.80, "milk_temp_C": 34.70,
+      "yield_deviation_pct": 20, "duration_deviation_pct": 35, "abnormal_flow_flag": false,
+      "body_temp_C": 40.0, "rumination_drop_pct": 25, "standing_lying_deviation_pct": 35,
+      "THI": 83, "ammonia_ppm": 12, "co_ppm": 1.5, "co2_ppm": 850
+    }
+  },
+  "sensor_malfunction_extreme": {
+    "description": "Values far beyond anything physiologically plausible in a healthy or diseased animal (EC 12, pH 9, body temp 44C, THI 110, gases in the thousands) — simulating a faulty/miscalibrated sensor.",
+    "what_this_tests": "Out-of-distribution robustness. The model was never trained near these values, so this checks how it extrapolates rather than what the 'correct' answer is — worth eyeballing the raw probabilities, not just the top class.",
+    "reading": {
+      "species": "Cattle", "breed_category": "crossbred", "lactation_stage": "early", "parity_bucket": "1",
+      "prior_mastitis_history": false, "prior_mastitis_episodes": 0, "vaccination_status": false,
+      "EC_mScm": 12.0, "pH": 9.0, "SCC_available": true, "SCC_x1e5_ml": 20.0,
+      "udder_temp_C": 42.0, "milk_temp_C": 5.0,
+      "yield_deviation_pct": 300, "duration_deviation_pct": 0, "abnormal_flow_flag": true,
+      "body_temp_C": 44.0, "rumination_drop_pct": 0, "standing_lying_deviation_pct": 0,
+      "THI": 110, "ammonia_ppm": 2000, "co_ppm": 200, "co2_ppm": 20000
+    }
+  },
+  "species_conditioning_demo_as_cattle": {
+    "description": "EC=4.6 and pH=6.80 entered with species=Cattle. Pair this with 'species_conditioning_demo_as_buffalo' (identical numbers, species=Buffalo).",
+    "what_this_tests": "Whether the SAME raw sensor numbers are correctly read as different risk depending on species — 4.6 mS/cm is Low-Risk for cattle but Moderate-Risk for buffalo per the spec's own species-specific cutoffs.",
+    "reading": {
+      "species": "Cattle", "breed_category": "crossbred", "lactation_stage": "mid", "parity_bucket": "2-3",
+      "prior_mastitis_history": false, "prior_mastitis_episodes": 0, "vaccination_status": true,
+      "EC_mScm": 4.6, "pH": 6.80, "SCC_available": false, "SCC_x1e5_ml": null,
+      "udder_temp_C": 34.0, "milk_temp_C": 34.2,
+      "yield_deviation_pct": 6, "duration_deviation_pct": 8, "abnormal_flow_flag": false,
+      "body_temp_C": 39.0, "rumination_drop_pct": 6, "standing_lying_deviation_pct": 8,
+      "THI": 70, "ammonia_ppm": 10, "co_ppm": 1.0, "co2_ppm": 800
+    }
+  },
+  "species_conditioning_demo_as_buffalo": {
+    "description": "The exact same readings as 'species_conditioning_demo_as_cattle' (EC=4.6, pH=6.80, etc.) but with species=Buffalo.",
+    "what_this_tests": "Direct side-by-side of species conditioning — compare per_parameter_risk_band against the Cattle version of this case.",
+    "reading": {
+      "species": "Buffalo", "breed_category": "indigenous", "lactation_stage": "mid", "parity_bucket": "2-3",
+      "prior_mastitis_history": false, "prior_mastitis_episodes": 0, "vaccination_status": true,
+      "EC_mScm": 4.6, "pH": 6.80, "SCC_available": false, "SCC_x1e5_ml": null,
+      "udder_temp_C": 34.0, "milk_temp_C": 34.2,
+      "yield_deviation_pct": 6, "duration_deviation_pct": 8, "abnormal_flow_flag": false,
+      "body_temp_C": 39.0, "rumination_drop_pct": 6, "standing_lying_deviation_pct": 8,
+      "THI": 70, "ammonia_ppm": 10, "co_ppm": 1.0, "co2_ppm": 800
+    }
+  },
+  "borderline_subclinical_multi_weak_signal": {
+    "description": "No single parameter is in High-Risk, but every parameter independently sits in Moderate-Risk at once.",
+    "what_this_tests": "Whether the model aggregates many simultaneous weak/moderate signals into a real subclinical call, rather than needing one dramatic outlier. Also a good case for comparing against the Section-7 composite heuristic, which lands almost exactly on its own No/Moderate/High boundary here.",
+    "reading": {
+      "species": "Cattle", "breed_category": "crossbred", "lactation_stage": "mid", "parity_bucket": "2-3",
+      "prior_mastitis_history": false, "prior_mastitis_episodes": 0, "vaccination_status": true,
+      "EC_mScm": 4.95, "pH": 6.90, "SCC_available": false, "SCC_x1e5_ml": null,
+      "udder_temp_C": 34.5, "milk_temp_C": 34.5,
+      "yield_deviation_pct": 15, "duration_deviation_pct": 25, "abnormal_flow_flag": false,
+      "body_temp_C": 39.7, "rumination_drop_pct": 20, "standing_lying_deviation_pct": 25,
+      "THI": 75, "ammonia_ppm": 12, "co_ppm": 1.3, "co2_ppm": 820
+    }
+  },
+  "vaccinated_history_but_currently_healthy": {
+    "description": "Buffalo with 3 prior mastitis episodes and current vaccination, but every current reading is clean/No-Risk.",
+    "what_this_tests": "Fairness/robustness check — the model should trust today's clean readings and predict 'none', not over-weight prior_mastitis_history into a false alarm.",
+    "reading": {
+      "species": "Buffalo", "breed_category": "crossbred", "lactation_stage": "late", "parity_bucket": "4+",
+      "prior_mastitis_history": true, "prior_mastitis_episodes": 3, "vaccination_status": true,
+      "EC_mScm": 3.6, "pH": 6.50, "SCC_available": true, "SCC_x1e5_ml": 1.5,
+      "udder_temp_C": 33.6, "milk_temp_C": 33.4,
+      "yield_deviation_pct": 3, "duration_deviation_pct": 5, "abnormal_flow_flag": false,
+      "body_temp_C": 38.5, "rumination_drop_pct": 3, "standing_lying_deviation_pct": 5,
+      "THI": 66, "ammonia_ppm": 9, "co_ppm": 0.8, "co2_ppm": 770
+    }
+  }
+}

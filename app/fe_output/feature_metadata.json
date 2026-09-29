@@ -1,0 +1,186 @@
+{
+  "id_cols": [
+    "animal_id",
+    "farm_id",
+    "day"
+  ],
+  "target_cols": [
+    "true_latent_severity",
+    "true_mastitis_status"
+  ],
+  "target_classes": [
+    "clinical",
+    "none",
+    "subclinical"
+  ],
+  "heuristic_reference_cols": [
+    "composite_score_modeA",
+    "composite_risk_band_modeA",
+    "composite_score_modeB",
+    "composite_risk_band_modeB"
+  ],
+  "bool_cols": [
+    "prior_mastitis_history",
+    "vaccination_status",
+    "SCC_available",
+    "abnormal_flow_flag"
+  ],
+  "nominal_cols": [
+    "species",
+    "breed_category"
+  ],
+  "ordinal_cols_and_order": {
+    "lactation_stage": [
+      "early",
+      "mid",
+      "late"
+    ],
+    "parity_bucket": [
+      "1",
+      "2-3",
+      "4+"
+    ],
+    "THI_band": [
+      "Normal",
+      "Alert",
+      "Danger",
+      "Emergency"
+    ]
+  },
+  "time_series_numeric_base_cols": [
+    "EC_mScm",
+    "pH",
+    "udder_temp_C",
+    "milk_temp_C",
+    "yield_deviation_pct",
+    "duration_deviation_pct",
+    "body_temp_C",
+    "rumination_drop_pct",
+    "standing_lying_deviation_pct",
+    "THI"
+  ],
+  "rolling_windows": [
+    3,
+    7
+  ],
+  "static_numeric_cols": [
+    "prior_mastitis_episodes",
+    "ammonia_ppm",
+    "co_ppm",
+    "co2_ppm"
+  ],
+  "risk_level_cols": [
+    "EC_risk_level",
+    "pH_risk_level",
+    "SCC_risk_level",
+    "udder_temp_risk_level",
+    "milk_temp_risk_level",
+    "yield_risk_level",
+    "duration_risk_level",
+    "flow_risk_level",
+    "body_temp_risk_level",
+    "rumination_risk_level",
+    "standing_lying_risk_level"
+  ],
+  "scc_raw_col": "SCC_x1e5_ml",
+  "numeric_cols_used_for_nn_impute_scale": [
+    "EC_mScm",
+    "EC_mScm_delta1",
+    "EC_mScm_roll3_mean",
+    "EC_mScm_roll3_std",
+    "EC_mScm_roll7_mean",
+    "EC_mScm_roll7_std",
+    "THI",
+    "THI_delta1",
+    "THI_roll3_mean",
+    "THI_roll3_std",
+    "THI_roll7_mean",
+    "THI_roll7_std",
+    "ammonia_ppm",
+    "body_temp_C",
+    "body_temp_C_delta1",
+    "body_temp_C_roll3_mean",
+    "body_temp_C_roll3_std",
+    "body_temp_C_roll7_mean",
+    "body_temp_C_roll7_std",
+    "co2_ppm",
+    "co_ppm",
+    "duration_deviation_pct",
+    "duration_deviation_pct_delta1",
+    "duration_deviation_pct_roll3_mean",
+    "duration_deviation_pct_roll3_std",
+    "duration_deviation_pct_roll7_mean",
+    "duration_deviation_pct_roll7_std",
+    "milk_temp_C",
+    "milk_temp_C_delta1",
+    "milk_temp_C_roll3_mean",
+    "milk_temp_C_roll3_std",
+    "milk_temp_C_roll7_mean",
+    "milk_temp_C_roll7_std",
+    "pH",
+    "pH_delta1",
+    "pH_roll3_mean",
+    "pH_roll3_std",
+    "pH_roll7_mean",
+    "pH_roll7_std",
+    "prior_mastitis_episodes",
+    "rumination_drop_pct",
+    "rumination_drop_pct_delta1",
+    "rumination_drop_pct_roll3_mean",
+    "rumination_drop_pct_roll3_std",
+    "rumination_drop_pct_roll7_mean",
+    "rumination_drop_pct_roll7_std",
+    "standing_lying_deviation_pct",
+    "standing_lying_deviation_pct_delta1",
+    "standing_lying_deviation_pct_roll3_mean",
+    "standing_lying_deviation_pct_roll3_std",
+    "standing_lying_deviation_pct_roll7_mean",
+    "standing_lying_deviation_pct_roll7_std",
+    "udder_temp_C",
+    "udder_temp_C_delta1",
+    "udder_temp_C_roll3_mean",
+    "udder_temp_C_roll3_std",
+    "udder_temp_C_roll7_mean",
+    "udder_temp_C_roll7_std",
+    "yield_deviation_pct",
+    "yield_deviation_pct_delta1",
+    "yield_deviation_pct_roll3_mean",
+    "yield_deviation_pct_roll3_std",
+    "yield_deviation_pct_roll7_mean",
+    "yield_deviation_pct_roll7_std",
+    "EC_risk_level",
+    "pH_risk_level",
+    "SCC_risk_level",
+    "udder_temp_risk_level",
+    "milk_temp_risk_level",
+    "yield_risk_level",
+    "duration_risk_level",
+    "flow_risk_level",
+    "body_temp_risk_level",
+    "rumination_risk_level",
+    "standing_lying_risk_level",
+    "SCC_x1e5_ml"
+  ],
+  "split_sizes": {
+    "train": {
+      "rows": 70000,
+      "animals": 700
+    },
+    "val": {
+      "rows": 15000,
+      "animals": 150
+    },
+    "test": {
+      "rows": 15000,
+      "animals": 150
+    }
+  },
+  "split_seed": 42,
+  "test_size": 0.15,
+  "val_size": 0.15,
+  "notes": [
+    "Fit only on train split; val/test are transform-only.",
+    "composite_score_modeA/B and composite_risk_band_modeA/B are excluded from both feature tables and saved separately as *_heuristic_reference.csv for comparing trained-model SHAP output against the spec's proposed weights.",
+    "xgb_*.csv keeps SCC and its risk level as native NaN (no imputation); nn_*.csv median-imputes and standardizes them, with SCC_available as a flag."
+  ]
+}

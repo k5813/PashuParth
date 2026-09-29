@@ -1,0 +1,15 @@
+parameter_group,mean_abs_shap,model_importance_normalized,spec_proposed_weight_modeA
+Milk temperature,0.94650275,0.28985965,0.05
+pH,0.66979176,0.2051189,0.22
+EC,0.48278952,0.14785081,0.3
+Milk yield deviation,0.3192522,0.09776868,0.08
+Udder temperature,0.19317529,0.059158538,0.08
+Rumination time drop,0.17427258,0.053369723,0.1
+Standing/lying time deviation,0.14773504,0.045242794,0.03
+Milking duration deviation,0.14310966,0.043826304,0.04
+Hygiene gases (no literature threshold),0.07351338,0.022512943,
+Static covariates (species/breed/lactation/parity/history/vaccination),0.058585525,0.017941395,
+THI (environmental modifier),0.022923617,0.007020192,
+Body temperature,0.020633582,0.006318886,0.1
+Abnormal flow flag,0.0071937186,0.0022030245,0.04
+SCC,0.005904597,0.0018082403,0.0
