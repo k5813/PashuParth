@@ -1,5 +1,5 @@
 # PashuParth — AI-Based Predictive Modeling for Bovine Mastitis Early Forecasting
-## Smart India Hackathon 2026 (Problem Statement PS 26109)
+
 
 PashuParth is an AI/IoT-enabled predictive forecasting platform designed to identify subclinical and clinical bovine mastitis risk in Indian dairy cattle and buffaloes **7 to 14 days before clinical onset**.
 
