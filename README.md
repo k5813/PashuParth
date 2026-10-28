@@ -1,7 +1,4 @@
 # PashuParth — AI & IoT Bovine Mastitis Early Warning Platform
-
-Smart India Hackathon 2026 (Problem Statement ID: PS 26109)
-
 ---
 
 ## 📁 Repository Structure
